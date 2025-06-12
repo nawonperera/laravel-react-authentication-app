@@ -1,10 +1,12 @@
 import React from "react";
+import AppRoutes from "./utilities/routers/AppRoutes.tsx";
+import { BrowserRouter } from "react-router";
 
 const App: React.FC = () => {
     return (
-        <div>
-            <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        </div>
+        <BrowserRouter>
+            <AppRoutes/>
+        </BrowserRouter>
     );
 };
 
