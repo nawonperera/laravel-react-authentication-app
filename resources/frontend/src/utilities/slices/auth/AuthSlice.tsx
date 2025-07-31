@@ -3,13 +3,15 @@ import type { IAuthInitialState } from "../../types/slices/authSlice";
 import { UserSignIn } from "../../api/auth/UserSignIn.ts";
 
 interface IAuthPayload {
-    user_id: string;
-    user_token: string;
+    userId: string;
+    token: string;
+    userRole: string;
 }
 
 const initialState: IAuthInitialState = {
     token: "",
     user_id: "",
+    user_role: "",
     isAuthenticated: false,
     isLoading: false,
 };
@@ -22,15 +24,15 @@ const authSlice = createSlice({
         builder
             .addCase(UserSignIn.pending, (state) => {
                 state.isLoading = true;
-                state.token = '';
-                state.isAuthenticated = false
+                state.token = "";
+                state.isAuthenticated = false;
             })
-            .addCase(
-                UserSignIn.fulfilled,
-                (state,  payload) => {
-                    setPayloadValuesIntoStore(state, { payload })
-                },
-            )
+            .addCase(UserSignIn.fulfilled, (state, action) => {
+                setPayloadValuesIntoStore(
+                    state,
+                    action.payload?.data as IAuthPayload,
+                );
+            })
             .addCase(UserSignIn.rejected, (state) => {
                 state.isAuthenticated = false;
                 state.isLoading = false;
@@ -38,15 +40,18 @@ const authSlice = createSlice({
     },
 });
 
-const setPayloadValuesIntoStore = (state: IAuthInitialState, payload: IAuthPayload) => {
-    if(!payload){
-        return
+const setPayloadValuesIntoStore = (
+    state: IAuthInitialState,
+    payload: IAuthPayload,
+) => {
+    if (!payload) {
+        return;
     }
-    state.user_id = payload.user_id;
-    state.token = payload.user_token;
+    state.user_id = payload.userId;
+    state.token = payload.token;
+    state.user_role = payload.userRole;
     state.isAuthenticated = true;
     state.isLoading = false;
-
-}
+};
 
 export default authSlice.reducer;
