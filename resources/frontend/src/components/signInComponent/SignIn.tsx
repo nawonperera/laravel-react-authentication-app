@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignInForm from "./SignInForm.tsx";
 import type { ISignInState } from "../../utilities/types/signIn/SignIn";
 import { UserSignIn } from "../../utilities/api/auth/UserSignIn.ts";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store.tsx";
+import { useNavigate } from "react-router";
 
 const SignIn: React.FC = () => {
+    const navigate = useNavigate();
+
     const [signInDetails, setSignInDetails] = useState<ISignInState>({
         email: "",
         password: "",
     });
+
+    const { user_role, isAuthenticated } = useSelector(
+        (state: RootState) => state.authentication,
+    );
+
+    useEffect(() => {
+        if (isAuthenticated && user_role === 1) {
+            navigate("/dashboard");
+        }
+    }, [user_role, isAuthenticated]);
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -28,7 +41,7 @@ const SignIn: React.FC = () => {
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
         event.preventDefault();
         // console.log(signInDetails);
-        await dispatch(UserSignIn({signInDetails}))
+        await dispatch(UserSignIn({ signInDetails }));
     };
 
     return (

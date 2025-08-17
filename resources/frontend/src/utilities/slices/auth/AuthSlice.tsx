@@ -1,17 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { IAuthInitialState } from "../../types/slices/authSlice";
+import type {IAuthInitialState, IAuthPayload} from "../../types/slices/authSlice";
 import { UserSignIn } from "../../api/auth/UserSignIn.ts";
 
-interface IAuthPayload {
-    userId: string;
-    token: string;
-    userRole: string;
-}
+
 
 const initialState: IAuthInitialState = {
     token: "",
     user_id: "",
-    user_role: "",
+    user_role: 0,
     isAuthenticated: false,
     isLoading: false,
 };
@@ -47,9 +43,12 @@ const setPayloadValuesIntoStore = (
     if (!payload) {
         return;
     }
-    state.user_id = payload.userId;
-    state.token = payload.token;
-    state.user_role = payload.userRole;
+
+    console.log(payload)
+
+    state.user_id = payload.user_id;
+    state.token = payload.user_token;
+    state.user_role = payload.user_role;
     state.isAuthenticated = true;
     state.isLoading = false;
 };
