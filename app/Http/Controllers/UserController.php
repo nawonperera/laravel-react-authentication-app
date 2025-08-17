@@ -26,6 +26,7 @@ class UserController extends Controller
         {
             return response()->json([
                 "user_id" => $user->id,
+                "user_role" => 1,
                 "user_token" => $user->createToken("Test Token", ["server:admin"])->plainTextToken,
             ]);
         }
