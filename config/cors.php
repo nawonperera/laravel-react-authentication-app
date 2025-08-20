@@ -29,6 +29,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
+    'supports_credentials' => true, // Set to true if you want to allow cookies to be sent with cross-origin requests
 
 ];
