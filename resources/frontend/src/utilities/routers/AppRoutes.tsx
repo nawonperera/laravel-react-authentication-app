@@ -11,8 +11,6 @@ import {
 import Products from "../../components/products/Products.tsx";
 import type {RootState} from "../../store.tsx";
 
-
-
 const AppRoutes: React.FC = () => {
     const { token, user_role, isAuthenticated } = useSelector(
         (state: RootState) => state.authentication,

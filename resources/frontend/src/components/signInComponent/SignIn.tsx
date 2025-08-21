@@ -39,7 +39,7 @@ const SignIn: React.FC = () => {
     };
 
     const handleSubmit = async (event: React.FormEvent): Promise<void> => {
-        event.preventDefault();
+        event.preventDefault(); // Prevent the default form submission behavior. Not reloading the page.
         // console.log(signInDetails);
         await dispatch(UserSignIn({ signInDetails }));
     };

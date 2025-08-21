@@ -21,7 +21,7 @@ const SignInForm: React.FC<ISingInFormProps> = ({
                         </label>
                         <input
                             type="email"
-                            name="email"
+                            name="email" // This name should match the state property in SignIn component. this "email" is the key in signInDetails state.
                             id="email"
                             onChange={handleInputFieldChange}
                             placeholder="name@company.com"
